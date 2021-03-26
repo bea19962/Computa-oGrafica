@@ -1,3 +1,15 @@
+#ifdef _APPLE_
+#include <GLUT/glut.h>
+#include <openGL/gl.h>   
+#else
+#include <GL/glut.h>
+#endif
+
+#include <cstdlib>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 using namespace std;
 float _angle = 0;
 float i;
@@ -30,11 +42,11 @@ float difusa2[] = { 0.97, 0.98, 0.92, 1.0 };
 float difusa3[] = { 0.09, 0.15, 0.1, 1.0 };
 
 
-//tabuleiro
+//checkboard
 GLuint _displayListId_blackArea; //The OpenGL id of the display list
 GLuint _displayListId_whiteArea; //The OpenGL id of the display list
 
-//peÁas
+//pieces
 GLuint _displayListId_blackPieces;
 GLuint _displayListId_whitePieces;
 
@@ -125,6 +137,7 @@ void menu(void)
     
 }
 
+//Menu Options
 void opcao_menu(int escolha)
 {
     switch (escolha)
@@ -192,7 +205,7 @@ void opcao_menu(int escolha)
     }
 }
 
-
+//Does the black spots in the board
 void draw_BlackArea()
 {
     // glPushMatrix();
@@ -257,6 +270,8 @@ void draw_BlackArea()
     //    glPopMatrix();
     
 }
+
+//does the white spots
 void draw_whiteArea()
 {
     // glPushMatrix();
@@ -338,6 +353,8 @@ void initRendering()
     draw_whiteArea(); //Add commands for drawing a black to the display list
     glEndList(); //End the display list
 }
+
+//Makes the pieces
 void drawPeça(float x, float z, bool color){
     glPushMatrix();
     glTranslatef(x, 0.6, z);
@@ -372,10 +389,6 @@ void drawScene()
     glPushMatrix();
     glLoadIdentity();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    
-    
-    //insert code down
     
     if(right){
         gluLookAt(0.0f, -15.0f, 7.0f,
@@ -441,7 +454,6 @@ void drawScene()
             }
         }
     }
-    //desenhar peças:
     for (int i = 0; i < 12; i++){
         drawPeça(pecaPretaX[i] , pecaPretaY[i], true);
     }
